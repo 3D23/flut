@@ -5,7 +5,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flut/grid.dart';
 import 'package:flut/interact_column.dart';
-import 'package:flut/data.dart';
+import 'package:flut/game_data.dart';
 import 'package:flut/tile.dart';
 import 'package:flut/tile_state_generator.dart';
 
