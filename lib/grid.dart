@@ -8,7 +8,8 @@ import 'cell.dart';
 class Grid extends PositionComponent with HasGameReference<MyGame> {
   int countCells;
   List<List<Cell>> cells = [];
-  final GridCalculateManager _calculateManager = GridCalculateManager();
+
+  final GridManager _manager = GridManager();
 
   @override
   ComponentKey? get key => ComponentKey.named("grid");
@@ -32,7 +33,8 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
   }
 
   void pushTile(int numberOfColumn, Tile? tile) {
-    Cell targetCell = _calculateManager.findCorrectCell(cells[numberOfColumn]);
+    Cell targetCell = _manager.findCorrectCell(cells[numberOfColumn]);
     targetCell.addTile(tile!);
+    _manager.mergeCells(cells, targetCell);
   }
 }

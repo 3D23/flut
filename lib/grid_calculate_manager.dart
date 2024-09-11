@@ -1,6 +1,6 @@
 import 'package:flut/cell.dart';
 
-class GridCalculateManager {
+class GridManager {
   Cell findCorrectCell(List<Cell> cells) {
     for (int i = 0; i < cells.length; i++) {
       if (cells[i].isBusy == true) {
@@ -8,5 +8,9 @@ class GridCalculateManager {
       }
     }
     return cells.last;
+  }
+
+  void mergeCells(List<List<Cell>> cells, Cell cell){
+
   }
 }
