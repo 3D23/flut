@@ -3,7 +3,7 @@ import 'package:flame/events.dart';
 import 'package:flut/grid.dart';
 import 'package:flut/my_game.dart';
 
-class InteractColumn extends PositionComponent with TapCallbacks, HasGameReference<MyGame> {
+class InteractColumn extends PositionComponent with TapCallbacks, HasGameReference<MyGame>, Notifier {
   int columnNumber;
 
   InteractColumn(this.columnNumber);
@@ -11,8 +11,7 @@ class InteractColumn extends PositionComponent with TapCallbacks, HasGameReferen
   @override
   void onTapDown(TapDownEvent event) {
     Grid? grid = game.findByKey(ComponentKey.named('grid'));
-    if (grid == null) {
-      return;
-    }
+    grid?.pushTile(columnNumber, game.currentTile);
+    notifyListeners();
   }
 }

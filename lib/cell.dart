@@ -1,16 +1,22 @@
 import 'dart:async';
-
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flut/tile.dart';
+import 'package:flutter/material.dart';
 
 class Cell extends PositionComponent {
   Sprite? sprite;
-  bool isBusy = false;
+  bool? _isBusy;
+  List<int>? coordinates;
+  Tile? currentTile;
 
-  Cell(size, position) {
+  bool? get isBusy => _isBusy;
+
+  Cell(int x, int y, size, position) {
     super.size = size;
     super.position = position;
+    coordinates = [x, y];
+    _isBusy = false;
   }
 
   @override
@@ -21,5 +27,18 @@ class Cell extends PositionComponent {
   @override
   void render(Canvas canvas) {
     sprite?.render(canvas, size: super.size);
+    if (children.isEmpty && currentTile != null) {
+      add(currentTile! ..position = size / 2 ..anchor = Anchor.center);
+    }
+  }
+
+  addTile(Tile tile) {
+    currentTile = tile;
+    _isBusy = true;
+  }
+
+  void d() {
+    debugColor = Colors.black54;
+    debugPrint(coordinates.toString());
   }
 }
