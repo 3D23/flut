@@ -1,0 +1,13 @@
+enum TileState {
+  none,
+  one,
+  two,
+  three,
+  four,
+  five,
+  six,
+  seven,
+  eight,
+  nine,
+  ten  
+}
