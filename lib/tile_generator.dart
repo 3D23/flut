@@ -17,6 +17,9 @@ class TileGenerator extends PositionComponent
   Tile? lastGeneratedTile;
   
   @override
+  ComponentKey? get key => ComponentKey.named("tileGen");
+  
+  @override
   FutureOr<void> onLoad() {
     sprite = Sprite(Flame.images.fromCache("generatorView.png"));
     _generate();
@@ -27,6 +30,8 @@ class TileGenerator extends PositionComponent
         _generate();
         _removeTile();
       } );
+    
+
   }
 
   @override
@@ -42,12 +47,16 @@ class TileGenerator extends PositionComponent
   void _generate() {
     debugPrint("generate");
     TileState state = generator.generate();
-    Tile tile = Tile(state) 
-    ..size = size * 0.9
-    ..position = size / 2
-    ..anchor = Anchor.center;  
+    Tile tile = createTile(state); 
     lastGeneratedTile = tile;
     notifyListeners();
+  }
+
+  Tile createTile(TileState state) {
+    return Tile(state) 
+      ..size = size * 0.9
+      ..position = size / 2
+      ..anchor = Anchor.center; 
   }
 
   void _removeTile() {
