@@ -1,8 +1,4 @@
-import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
-import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
 import 'package:flut/tile_state.dart';
 
 class TileStateGenrator {
@@ -15,19 +11,5 @@ class TileStateGenrator {
       }
     }
     return TileState.none;
-  }
-}
-
-class TileGenerator extends PositionComponent {
-  Sprite? sprite;
-  
-  @override
-  FutureOr<void> onLoad() {
-    sprite = Sprite(Flame.images.fromCache("generatorView.png"));
-  }
-
-  @override
-  void render(Canvas canvas) {
-    sprite?.render(canvas, size: size);
   }
 }

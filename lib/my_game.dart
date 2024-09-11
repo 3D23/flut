@@ -7,7 +7,7 @@ import 'package:flut/grid.dart';
 import 'package:flut/interact_column.dart';
 import 'package:flut/game_data.dart';
 import 'package:flut/tile.dart';
-import 'package:flut/tile_state_generator.dart';
+import 'package:flut/tile_generator.dart';
 
 class MyGame extends FlameGame {
   static const int countColumn = 5;
@@ -39,7 +39,7 @@ class MyGame extends FlameGame {
     ..size = _grid.size / (countColumn).toDouble();
 
     add(_generator as Component);
-    currentTile = Tile(TileStateGenrator.generate());
+    _generator?.generate();
   }
 
   @override
