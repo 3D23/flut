@@ -32,13 +32,18 @@ class Cell extends PositionComponent {
     }
   }
 
-  addTile(Tile tile) {
+  void addTile(Tile tile) {
     currentTile = tile;
     _isBusy = true;
   }
 
-  void d() {
-    debugColor = Colors.black54;
-    debugPrint(coordinates.toString());
+  void clear() {
+    if (_isBusy == true) {
+      currentTile = null;
+      _isBusy = false;
+      if (children.isNotEmpty && currentTile == null) {
+        remove(children.first);
+      }
+    }
   }
 }

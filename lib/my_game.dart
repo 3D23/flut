@@ -13,8 +13,6 @@ class MyGame extends FlameGame {
   static const int countColumn = 5;
   List<InteractColumn> interactColumns = [];
   Tile? currentTile;
-@override
-  bool get debugMode => true;
 
   final _grid = Grid(countColumn)
   ..size = Vector2(600, 600)
