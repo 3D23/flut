@@ -5,6 +5,7 @@ import 'package:flut/my_game.dart';
 import 'package:flut/tile.dart';
 import 'package:flut/tile_generator.dart';
 import 'package:flut/tile_state.dart';
+import 'package:flutter/foundation.dart';
 import 'cell.dart';
 
 class Grid extends PositionComponent with HasGameReference<MyGame> {
@@ -23,6 +24,13 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
     _instanceCells(countCells);
   }
 
+  void pushTile(int numberOfColumn, Tile? tile) {
+    Cell targetCell = _manager.findMostDownCell(cells[numberOfColumn]);
+    targetCell.addTile(tile!);
+    _executeMergeLoop(targetCell);
+    _startFallLoop();
+  }
+
   void _instanceCells(int countCells) {
     for (var i = 0; i < countCells; i++) {
       cells.add([]);
@@ -34,13 +42,8 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
     }
   }
 
-  void pushTile(int numberOfColumn, Tile? tile) {
-    Cell targetCell = _manager.findCorrectCell(cells[numberOfColumn]);
-    targetCell.addTile(tile!);
-    // _merge(_manager.getMergeInfo(cells, targetCell));
-  }
-
-  void _merge(Map<List<int>, TileState> mergeData) {
+  Cell? _merge(Map<List<int>, TileState> mergeData) {
+    Cell? cell;
     mergeData.forEach((key, value) {
       if (value == TileState.none) {
         _manager.findCellByCoords(key, cells)!.clear();
@@ -49,9 +52,54 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
         Cell? targetCell = _manager.findCellByCoords(key, cells)!;
         targetCell.clear();
         targetCell.addTile((game
-          .findByKeyName(ComponentKey.named('tileGen') as String) as TileGenerator)
+          .findByKey(ComponentKey.named('tileGen')) as TileGenerator)
           .createTile(value));
+        cell = targetCell;
       }
     });
+    debugPrint(cell?.coordinates.toString());
+    return cell;
   }
+
+  void _executeMergeLoop(Cell targetCell) {
+    _mergeForCurrentCell(targetCell);
+    _mergeForAllCell();
+  }
+
+  void _mergeForCurrentCell(Cell targetCell) {
+    bool isRepeat = false;
+    Cell mergeCell = targetCell;
+    do {
+      isRepeat = false;
+      if (mergeCell.currentTile != null) {
+        if (_manager.getMergeInfo(cells, mergeCell).item2 == true) {
+          Cell? cell = _merge(_manager.getMergeInfo(cells, mergeCell).item1);
+          if (cell != null) {
+            isRepeat = true;
+            mergeCell = cell;
+          }
+        }
+      }
+    } while (isRepeat);
+  } 
+
+  void _mergeForAllCell() {
+    bool isRepeat = false;
+    do {
+      isRepeat = false;
+      for (var cellRow in cells) {
+        for (var cell in cellRow) {
+          if (cell.currentTile != null) {
+            var mergeInfo = _manager.getMergeInfo(cells, cell);
+            if (mergeInfo.item2 == true) {
+              isRepeat = true;
+              _mergeForCurrentCell(cell);
+            }
+          }
+        }
+      }
+    } while (isRepeat);
+  }
+
+  void _startFallLoop() {}
 }

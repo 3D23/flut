@@ -37,7 +37,6 @@ class TileGenerator extends PositionComponent
   @override
   void render(Canvas canvas) {
     sprite?.render(canvas, size: size);
-    debugPrint("render");
     if (lastGeneratedTile != null) {
       add(lastGeneratedTile as Component);
       lastGeneratedTile = null;
@@ -45,7 +44,6 @@ class TileGenerator extends PositionComponent
   }
 
   void _generate() {
-    debugPrint("generate");
     TileState state = generator.generate();
     Tile tile = createTile(state); 
     lastGeneratedTile = tile;
@@ -54,14 +52,13 @@ class TileGenerator extends PositionComponent
 
   Tile createTile(TileState state) {
     return Tile(state) 
-      ..size = size * 0.9
+      ..size = size * 0.93
       ..position = size / 2
       ..anchor = Anchor.center; 
   }
 
   void _removeTile() {
     if (children.isNotEmpty) {
-      debugPrint("remove");
       remove(children.first);
     }
   }

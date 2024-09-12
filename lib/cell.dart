@@ -46,9 +46,4 @@ class Cell extends PositionComponent {
       }
     }
   }
-
-  void d() {
-    debugColor = Colors.black54;
-    debugPrint(coordinates.toString());
-  }
 }
