@@ -7,7 +7,6 @@ import 'package:flut/my_game.dart';
 import 'package:flut/tile.dart';
 import 'package:flut/tile_state.dart';
 import 'package:flut/tile_state_generator.dart';
-import 'package:flutter/foundation.dart';
 
 class TileGenerator extends PositionComponent 
   with Notifier, 

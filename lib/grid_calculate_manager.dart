@@ -13,6 +13,18 @@ class GridManager {
     return cells.last;
   }
 
+  Cell findMostDownCellForCell(Cell cell, List<Cell> cells) {
+    var yCoord = cell.coordinates![1];
+    for (int i = 0; i < cells.length; i++) {
+      if (i > yCoord) {
+        if (cells[i].isBusy == true) {
+          return cells[i - 1];
+        }
+      }
+    }
+    return cells.last;
+  }
+
   Tuple2<Map<List<int>, TileState>, bool> getMergeInfo(List<List<Cell>> cells, Cell cell) {
     Map<List<int>, TileState> map = {};
     Tile currentTile = cell.currentTile!;

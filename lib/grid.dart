@@ -24,11 +24,15 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
     _instanceCells(countCells);
   }
 
+  @override
+  void update(double dt) {
+    _executeLoop();
+  }
+
   void pushTile(int numberOfColumn, Tile? tile) {
     Cell targetCell = _manager.findMostDownCell(cells[numberOfColumn]);
     targetCell.addTile(tile!);
-    _executeMergeLoop(targetCell);
-    _startFallLoop();
+    _mergeForCurrentCell(targetCell);
   }
 
   void _instanceCells(int countCells) {
@@ -59,11 +63,6 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
     });
     debugPrint(cell?.coordinates.toString());
     return cell;
-  }
-
-  void _executeMergeLoop(Cell targetCell) {
-    _mergeForCurrentCell(targetCell);
-    _mergeForAllCell();
   }
 
   void _mergeForCurrentCell(Cell targetCell) {
@@ -101,5 +100,24 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
     } while (isRepeat);
   }
 
-  void _startFallLoop() {}
+  void _executeLoop() {
+    _mergeForAllCell();
+    _executeFallLoop();
+  }
+
+  void _executeFallLoop() {
+    for (var i = 0; i < cells.length; i++) {
+      var row = cells[i];
+      for (var cell in row.reversed) {
+        Cell mostDownCell = _manager.findMostDownCellForCell(cell, row);
+        if (mostDownCell.coordinates![1] > cell.coordinates![1]) {
+          if (cell.currentTile != null) {
+            var tile = cell.currentTile;
+            cell.clear();
+            mostDownCell.addTile(tile!);
+          }
+        }
+      }
+    }
+  }
 }
