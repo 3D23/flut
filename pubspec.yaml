@@ -68,6 +68,8 @@ flutter:
     - assets/images/cellPng.png
     - assets/images/generatorView.png
     - assets/images/tilesSpriteAsset.png
+    - assets/images/canBePushTile.png
+    - assets/images/notCanBePushTile.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
