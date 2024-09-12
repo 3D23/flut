@@ -47,13 +47,17 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
   }
 
   Cell? _merge(Map<List<int>, TileState> mergeData) {
+    debugPrint(mergeData.toString());
     Cell? cell;
     mergeData.forEach((key, value) {
       if (value == TileState.none) {
-        _manager.findCellByCoords(key, cells)!.clear();
+        Cell? targetCell = _manager.findCellByCoords(key, cells)!;
+        targetCell.clear();
+        debugPrint(targetCell!.coordinates.toString());
       }
       else {
         Cell? targetCell = _manager.findCellByCoords(key, cells)!;
+        debugPrint(targetCell!.coordinates.toString());
         targetCell.clear();
         targetCell.addTile((game
           .findByKey(ComponentKey.named('tileGen')) as TileGenerator)
@@ -61,7 +65,6 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
         cell = targetCell;
       }
     });
-    debugPrint(cell?.coordinates.toString());
     return cell;
   }
 

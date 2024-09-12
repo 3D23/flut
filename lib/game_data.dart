@@ -4,7 +4,9 @@ import 'package:flame/game.dart';
 List<String> loadImages = [
   'cellPng.png', 
   'generatorView.png',
-  'tilesSpriteAsset.png'
+  'tilesSpriteAsset.png',
+  'notCanBePushTile.png',
+  'canBePushTile.png'
 ];
 
 //tileSpriteAsset
