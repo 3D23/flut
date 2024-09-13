@@ -30,7 +30,6 @@ class GridManager {
     Tile currentTile = cell.currentTile!;
     int typeIdx = currentTile.state.index;
     List<int> currentCoordinates = cell.coordinates!;
-    List<int> targetCoords = currentCoordinates;
     Cell? leftNeighbour =
       findCellByCoords([currentCoordinates[0] - 1, currentCoordinates[1]], cells);
     Cell? rightNeighbour = 
@@ -41,21 +40,14 @@ class GridManager {
     for (var n in neigbours) {
       if (n?.currentTile?.state == currentTile.state) {
         typeIdx++;
-        if (n == downNeighbour) {
-          targetCoords = n!.coordinates!;
-        }
         map[n!.coordinates!] = TileState.none;
       }
     }
-    if (typeIdx != currentTile.state.index) {
-      map[currentCoordinates] = TileState.none;
-    }
+    map[currentCoordinates] = TileState.values.firstWhere((state) => state.index == typeIdx);
     bool isMerged = false;
     if (map.length > 1) {
       isMerged = true;
     }
-
-    map[targetCoords] = TileState.values.firstWhere((state) => state.index == typeIdx);
     return Tuple2(map, isMerged);
   }
 

@@ -3,9 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flut/grid_calculate_manager.dart';
 import 'package:flut/my_game.dart';
 import 'package:flut/tile.dart';
-import 'package:flut/tile_generator.dart';
 import 'package:flut/tile_state.dart';
-import 'package:flutter/foundation.dart';
 import 'cell.dart';
 
 class Grid extends PositionComponent with HasGameReference<MyGame> {
@@ -54,14 +52,11 @@ class Grid extends PositionComponent with HasGameReference<MyGame> {
       }
       else {
         Cell? targetCell = _manager.findCellByCoords(key, cells)!;
-        targetCell.clear();
-        targetCell.addTile((game
-          .findByKey(ComponentKey.named('tileGen')) as TileGenerator)
-          .createTile(value));
+        targetCell.currentTile!.setSprite(value);
         cell = targetCell;
       }
     });
-    debugPrint(cell?.coordinates.toString());
+
     return cell;
   }
 

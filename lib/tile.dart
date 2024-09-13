@@ -10,7 +10,12 @@ class Tile extends PositionComponent with HasGameReference<MyGame> {
   TileState state = TileState.none;
   Sprite? sprite;
 
-  Tile(this.state) {
+  Tile(TileState state) {
+    setSprite(state);
+  }
+
+  void setSprite(TileState state) {
+    this.state = state;
     var spriteData = tilesSpriteAssetMap[pow(2, state.index)];
     sprite = Sprite(
       Flame.images.fromCache('tilesSpriteAsset.png'),

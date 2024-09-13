@@ -38,6 +38,10 @@ class InteractColumn extends PositionComponent with HoverCallbacks, TapCallbacks
     if (sprite != null) {
       sprite!.render(canvas, size:size);
     }
+  }
+
+  @override
+  void update(double dt) {
     if (isHovered) {
       container?.addTile(game.currentTile!);
     }
@@ -52,5 +56,4 @@ class InteractColumn extends PositionComponent with HoverCallbacks, TapCallbacks
   void onHoverExit() {
     sprite = null;
   }
-  
 }
