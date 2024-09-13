@@ -28,25 +28,22 @@ class Cell extends PositionComponent {
   void render(Canvas canvas) {
     sprite?.render(canvas, size: super.size);
     if (children.isEmpty && currentTile != null) {
-      add(currentTile!
-        ..position = size / 2 
-        ..anchor = Anchor.center);
+      add(currentTile! ..position = size / 2 ..anchor = Anchor.center);
     }
   }
 
   void addTile(Tile tile) {
     currentTile = tile;
     _isBusy = true;
-    add(currentTile!
-      ..position = size / 2 
-      ..anchor = Anchor.center);
   }
 
   void clear() {
     if (_isBusy == true) {
       currentTile = null;
       _isBusy = false;
-      remove(children.first);
+      if (children.isNotEmpty && currentTile == null) {
+        remove(children.first);
+      }
     }
   }
 }
