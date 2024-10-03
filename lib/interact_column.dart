@@ -45,6 +45,9 @@ class InteractColumn extends PositionComponent with HoverCallbacks, TapCallbacks
     if (isHovered) {
       container?.addTile(game.currentTile!);
     }
+    else {
+      container?.clear();
+    }
   }
 
   @override

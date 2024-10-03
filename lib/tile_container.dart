@@ -7,12 +7,16 @@ class TileContainer extends PositionComponent {
 
   TileContainer(this.number);
 
-  addTile(Tile tile) {
-    currentTile = tile;
-    add(currentTile!);
+  void addTile(Tile tile) {
+    if (currentTile == null) {
+      currentTile = tile;
+      add(currentTile!);
+    }
   }
 
-  clear() {
-    currentTile = null;
+  void clear() {
+    if (currentTile != null) {
+      currentTile = null;
+    }
   }
 }

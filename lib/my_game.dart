@@ -16,6 +16,10 @@ class MyGame extends FlameGame {
   List<TileContainer> containers = [];
   Tile? currentTile;
 
+  @override
+  bool get debugMode => true;
+
+  
   final _grid = Grid(countColumn)
   ..size = Vector2(600, 600)
   ..position = Vector2(100, 300);
